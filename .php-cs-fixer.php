@@ -127,7 +127,7 @@ return (new Config())
  ___) |   | |   | |\  | | |_| | |  __/   ___) |  | |  | |___  
 |____/    |_|   |_| \_|  \___/  |_|     |____/  |___| |_____|
 
-BroadCaster plugin.
+Ce plugin fera en sorte d'écrire des messages automatiques au moment souhaitez et entièremenet configurable.
 
 @author Synopsie
 @link https://github.com/Synopsie
