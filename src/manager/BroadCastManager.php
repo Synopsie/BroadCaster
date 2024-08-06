@@ -1,5 +1,20 @@
 <?php
 
+/*
+ *  ____   __   __  _   _    ___    ____    ____    ___   _____
+ * / ___|  \ \ / / | \ | |  / _ \  |  _ \  / ___|  |_ _| | ____|
+ * \___ \   \ V /  |  \| | | | | | | |_) | \___ \   | |  |  _|
+ *  ___) |   | |   | |\  | | |_| | |  __/   ___) |  | |  | |___
+ * |____/    |_|   |_| \_|  \___/  |_|     |____/  |___| |_____|
+ *
+ * Ce plugin fera en sorte d'écrire des messages automatiques au moment souhaitez et entièremenet configurable.
+ *
+ * @author Synopsie
+ * @link https://github.com/Synopsie
+ * @version 1.0.0
+ *
+ */
+
 declare(strict_types=1);
 
 namespace broadcaster\manager;
@@ -12,7 +27,6 @@ use function count;
 use function is_callable;
 
 class BroadCastManager {
-
 	/** @var BroadCastMessage[] */
 	private array $messages     = [];
 	private int $currentMessage = 0;
@@ -20,7 +34,7 @@ class BroadCastManager {
 	private ClosureTask $closureTask;
 
 	public function __construct(
-        Main $main
+		Main $main
 	) {
 		$this->main = $main;
 	}
@@ -74,7 +88,7 @@ class BroadCastManager {
 					if (is_callable($msg)) {
 						$msg = $msg();
 					}
-                    $this->main->getServer()->broadcastMessage($msg);
+					$this->main->getServer()->broadcastMessage($msg);
 				}
 			);
 		} else {
