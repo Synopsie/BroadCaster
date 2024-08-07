@@ -23,6 +23,7 @@ use broadcaster\Main;
 use broadcaster\utils\BroadCastMessage;
 use pocketmine\scheduler\ClosureTask;
 
+use pocketmine\Server;
 use function count;
 use function is_callable;
 
@@ -88,7 +89,18 @@ class BroadCastManager {
 					if (is_callable($msg)) {
 						$msg = $msg();
 					}
-					$this->main->getServer()->broadcastMessage($msg);
+                    $type = $this->main->getConfig()->getNested('broadcast.type');
+                    if ($type === 'popup') {
+                        Server::getInstance()->broadcastPopup($msg);
+                    }elseif($type === 'tip') {
+                        Server::getInstance()->broadcastTip($msg);
+                    }elseif($type === 'actionbar'){
+                        foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+                            $player->sendActionBarMessage($msg);
+                        }
+                    }else{
+                        Server::getInstance()->broadcastMessage($msg);
+                    }
 				}
 			);
 		} else {

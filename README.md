@@ -7,7 +7,7 @@ Ce plugin fera en sorte d'écrire des messages automatiques au moment souhaitez 
 - **Configurable** : Diverses options de personnalisation.
 - **Permissions** : Contrôlez l'accès aux commandes.
 
-## Configuration :pencil:
+## Configuration 🔨
 
 ```yaml
 # BroadCaster plugin config.
@@ -25,8 +25,11 @@ unregister.say.command: false
 
 # Interval de message destiné aux messages exéptionnels.
 broadcastMessage.Interval: 300
-broadcast.format: '§7[§6Broadcast§7] §f%message%' #Possibilité de mettre %player% pour afficher le nom du joueur.
+broadcast:
+  format: '§7[§6Broadcast§7] §f%message%' #Possibilité de mettre %player% pour afficher le nom du joueur.
+  type: chat # popup actionbar, tip, chat
 
+message.type: chat # popup, actionbar, tip, chat
 broadcasts:
   0:
     message: 'Welcome to the server!'

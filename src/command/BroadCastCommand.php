@@ -46,6 +46,18 @@ class BroadCastCommand extends CommandBase {
 	}
 
 	protected function onRun(CommandSender $sender, array $parameters) : void {
-		Server::getInstance()->broadcastMessage(str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], Main::getInstance()->getConfig()->get('broadcast.format')));
+        $type = strtolower(Main::getInstance()->getConfig()->getNested('broadcast.type'));
+        $format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], Main::getInstance()->getConfig()->getNested('broadcast.format'));
+        if ($type === 'popup') {
+            Server::getInstance()->broadcastPopup($format);
+        }elseif($type === 'tip') {
+            Server::getInstance()->broadcastTip($format);
+        }elseif($type === 'actionbar'){
+            foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+                $player->sendActionBarMessage($format);
+            }
+        }else{
+            Server::getInstance()->broadcastMessage($format);
+        }
 	}
 }
