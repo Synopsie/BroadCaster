@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.1.0
+ * @version 1.2.0
  *
  */
 
@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace broadcaster\command;
 
+use broadcaster\command\parameter\BroadCastTypeParameter;
 use broadcaster\Main;
 use iriss\CommandBase;
 use iriss\parameters\TextParameter;
@@ -26,7 +27,6 @@ use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\Server;
 use function str_replace;
-use function strtolower;
 
 class BroadCastCommand extends CommandBase {
 	public function __construct(
@@ -42,12 +42,13 @@ class BroadCastCommand extends CommandBase {
 
 	public function getCommandParameters() : array {
 		return [
+			new BroadCastTypeParameter('type', 'type', false),
 			new TextParameter('message', false)
 		];
 	}
 
 	protected function onRun(CommandSender $sender, array $parameters) : void {
-		$type   = strtolower(Main::getInstance()->getConfig()->getNested('broadcast.type'));
+		$type   = $parameters['type'] ?? 'chat';
 		$format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], Main::getInstance()->getConfig()->getNested('broadcast.format'));
 		if ($type === 'popup') {
 			Server::getInstance()->broadcastPopup($format);
@@ -56,6 +57,10 @@ class BroadCastCommand extends CommandBase {
 		} elseif($type === 'actionbar') {
 			foreach (Server::getInstance()->getOnlinePlayers() as $player) {
 				$player->sendActionBarMessage($format);
+			}
+		} elseif ($type === 'toast') {
+			foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+				$player->sendToastNotification(Main::getInstance()->getConfig()->get('broadcast.toast.title', ''), $format);
 			}
 		} else {
 			Server::getInstance()->broadcastMessage($format);

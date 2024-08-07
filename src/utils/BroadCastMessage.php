@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.1.0
+ * @version 1.2.0
  *
  */
 
@@ -27,6 +27,7 @@ final class BroadCastMessage {
 	 * @var string|Closure(): string $message
 	 */
 	private Closure|string $message;
+	private string $type;
 	private bool $exclusive;
 	private ?int $time;
 
@@ -35,6 +36,7 @@ final class BroadCastMessage {
 	 */
 	public function __construct(
 		Closure|string $message,
+		string $type,
 		bool                    $exclusive = false,
 		?int                    $time = null
 	) {
@@ -42,6 +44,7 @@ final class BroadCastMessage {
 			throw new Exception('If the message is exclusive, you must specify a time');
 		}
 		$this->message   = $message;
+		$this->type      = $type;
 		$this->exclusive = $exclusive;
 		$this->time      = $time;
 	}
@@ -51,6 +54,10 @@ final class BroadCastMessage {
 	 */
 	public function getMessage() : Closure|string {
 		return $this->message;
+	}
+
+	public function getType() : string {
+		return $this->type;
 	}
 
 	public function isExclusive() : bool {

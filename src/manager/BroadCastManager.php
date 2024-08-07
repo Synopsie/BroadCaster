@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.1.0
+ * @version 1.2.0
  *
  */
 
@@ -86,10 +86,10 @@ class BroadCastManager {
 				function () : void {
 					$message = $this->getNextMessage();
 					$msg     = $message->getMessage();
+					$type    = $message->getType();
 					if (is_callable($msg)) {
 						$msg = $msg();
 					}
-					$type = $this->main->getConfig()->getNested('broadcast.type');
 					if ($type === 'popup') {
 						Server::getInstance()->broadcastPopup($msg);
 					} elseif($type === 'tip') {
