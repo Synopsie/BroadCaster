@@ -56,6 +56,7 @@ class Main extends PluginBase {
 		foreach ($config->get('broadcasts') as $broadcast) {
 			$this->getBroadCastManager()->registerMessage(new BroadCastMessage(
 				$broadcast['message'],
+                $broadcast['type'],
 				false,
 				$broadcast['interval'],
 			));
