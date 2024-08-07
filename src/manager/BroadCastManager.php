@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 
@@ -89,18 +89,18 @@ class BroadCastManager {
 					if (is_callable($msg)) {
 						$msg = $msg();
 					}
-                    $type = $this->main->getConfig()->getNested('broadcast.type');
-                    if ($type === 'popup') {
-                        Server::getInstance()->broadcastPopup($msg);
-                    }elseif($type === 'tip') {
-                        Server::getInstance()->broadcastTip($msg);
-                    }elseif($type === 'actionbar'){
-                        foreach (Server::getInstance()->getOnlinePlayers() as $player) {
-                            $player->sendActionBarMessage($msg);
-                        }
-                    }else{
-                        Server::getInstance()->broadcastMessage($msg);
-                    }
+					$type = $this->main->getConfig()->getNested('broadcast.type');
+					if ($type === 'popup') {
+						Server::getInstance()->broadcastPopup($msg);
+					} elseif($type === 'tip') {
+						Server::getInstance()->broadcastTip($msg);
+					} elseif($type === 'actionbar') {
+						foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+							$player->sendActionBarMessage($msg);
+						}
+					} else {
+						Server::getInstance()->broadcastMessage($msg);
+					}
 				}
 			);
 		} else {

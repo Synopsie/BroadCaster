@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 
@@ -26,6 +26,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\Server;
 use function str_replace;
+use function strtolower;
 
 class BroadCastCommand extends CommandBase {
 	public function __construct(
@@ -46,18 +47,18 @@ class BroadCastCommand extends CommandBase {
 	}
 
 	protected function onRun(CommandSender $sender, array $parameters) : void {
-        $type = strtolower(Main::getInstance()->getConfig()->getNested('broadcast.type'));
-        $format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], Main::getInstance()->getConfig()->getNested('broadcast.format'));
-        if ($type === 'popup') {
-            Server::getInstance()->broadcastPopup($format);
-        }elseif($type === 'tip') {
-            Server::getInstance()->broadcastTip($format);
-        }elseif($type === 'actionbar'){
-            foreach (Server::getInstance()->getOnlinePlayers() as $player) {
-                $player->sendActionBarMessage($format);
-            }
-        }else{
-            Server::getInstance()->broadcastMessage($format);
-        }
+		$type   = strtolower(Main::getInstance()->getConfig()->getNested('broadcast.type'));
+		$format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], Main::getInstance()->getConfig()->getNested('broadcast.format'));
+		if ($type === 'popup') {
+			Server::getInstance()->broadcastPopup($format);
+		} elseif($type === 'tip') {
+			Server::getInstance()->broadcastTip($format);
+		} elseif($type === 'actionbar') {
+			foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+				$player->sendActionBarMessage($format);
+			}
+		} else {
+			Server::getInstance()->broadcastMessage($format);
+		}
 	}
 }
