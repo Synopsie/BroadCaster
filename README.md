@@ -1,7 +1,6 @@
 # Plugin [BroadCaster](https://github.com/Synopsie/BroadCaster) 📢
 
-Ce plugin fera en sorte d'écrire des messages automatiques au moment souhaitez et entièremenet configurable.
-## Fonctionnalités :tools:
+## Fonctionnalités ⚒ 
 
 - **Commande** : Utilisez `/bc` pour faire une annonce à tous les joueurs.
 - **Configurable** : Diverses options de personnalisation.
@@ -36,7 +35,7 @@ broadcasts:
     interval: 300
 ```
 
-## Licence :scroll:
+## Licence 📂
 
 Sous licence MIT. Voir [LICENSE](https://github.com/Synopsie/BroadCaster/blob/v1.0.0/LICENSE) pour plus de détails.
 ---

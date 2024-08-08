@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.2.0
+ * @version 1.2.1
  *
  */
 
@@ -56,7 +56,7 @@ class Main extends PluginBase {
 		foreach ($config->get('broadcasts') as $broadcast) {
 			$this->getBroadCastManager()->registerMessage(new BroadCastMessage(
 				$broadcast['message'],
-                $broadcast['type'],
+				$broadcast['type'],
 				false,
 				$broadcast['interval'],
 			));
