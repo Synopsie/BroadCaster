@@ -25,6 +25,7 @@ use iriss\CommandBase;
 use iriss\parameters\TextParameter;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
+use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\Server;
 use function str_replace;
 
@@ -48,8 +49,9 @@ class BroadCastCommand extends CommandBase {
 	}
 
 	protected function onRun(CommandSender $sender, array $parameters) : void {
+        $config = Main::getInstance()->getConfig();
 		$type   = $parameters['type'] ?? 'chat';
-		$format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], Main::getInstance()->getConfig()->getNested('broadcast.format'));
+		$format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], $config->getNested('broadcast.format'));
 		if ($type === 'popup') {
 			Server::getInstance()->broadcastPopup($format);
 		} elseif($type === 'tip') {
@@ -60,10 +62,25 @@ class BroadCastCommand extends CommandBase {
 			}
 		} elseif ($type === 'toast') {
 			foreach (Server::getInstance()->getOnlinePlayers() as $player) {
-				$player->sendToastNotification(Main::getInstance()->getConfig()->get('broadcast.toast.title', ''), $format);
+				$player->sendToastNotification($config->get('broadcast.toast.title', ''), $format);
 			}
 		} else {
 			Server::getInstance()->broadcastMessage($format);
 		}
+        if ($config->get('use.sound')) {
+            foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+                $position = $player->getPosition();
+                $player->getNetworkSession()->sendDataPacket(
+                    PlaySoundPacket::create(
+                        $config->get('sound.name', 'note.bell'),
+                        $position->getX(),
+                        $position->getY(),
+                        $position->getZ(),
+                        $config->get('sound.volume', 100),
+                        $config->get('sound.pitch', 1)
+                    )
+                );
+            }
+        }
 	}
 }

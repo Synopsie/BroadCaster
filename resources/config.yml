@@ -11,6 +11,12 @@ command:
 
 unregister.say.command: false
 
+use.sound: true
+sound:
+  name: 'note.bell'
+  volume: 100
+  pitch: 1
+
 broadcast.toast.title: "§cBroadCast !"
 
 # Interval de message destiné aux messages exéptionnels.

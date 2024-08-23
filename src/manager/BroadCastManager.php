@@ -21,6 +21,7 @@ namespace broadcaster\manager;
 
 use broadcaster\Main;
 use broadcaster\utils\BroadCastMessage;
+use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\scheduler\ClosureTask;
 
 use pocketmine\Server;
@@ -87,6 +88,7 @@ class BroadCastManager {
 					$message = $this->getNextMessage();
 					$msg     = $message->getMessage();
 					$type    = $message->getType();
+                    $config = Main::getInstance()->getConfig();
 					if (is_callable($msg)) {
 						$msg = $msg();
 					}
@@ -98,9 +100,28 @@ class BroadCastManager {
 						foreach (Server::getInstance()->getOnlinePlayers() as $player) {
 							$player->sendActionBarMessage($msg);
 						}
-					} else {
+					}elseif($type === 'toast'){
+                        foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+                            $player->sendToastNotification($config->get('broadcast.toast.title', ''), $msg);
+                        }
+                    } else {
 						Server::getInstance()->broadcastMessage($msg);
 					}
+                    if ($config->get('use.sound')) {
+                        foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+                            $position = $player->getPosition();
+                            $player->getNetworkSession()->sendDataPacket(
+                                PlaySoundPacket::create(
+                                    $config->get('sound.name', 'note.bell'),
+                                    $position->getX(),
+                                    $position->getY(),
+                                    $position->getZ(),
+                                    $config->get('sound.volume', 100),
+                                    $config->get('sound.pitch', 1)
+                                )
+                            );
+                        }
+                    }
 				}
 			);
 		} else {
