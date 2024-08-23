@@ -1,5 +1,5 @@
 name: BroadCaster
-version: 1.2.1
+version: 1.4.0
 main: broadcaster\Main
 src-namespace-prefix: broadcaster
 api: 5.0.0

@@ -14,7 +14,7 @@
 command:
   name: 'broadcast'
   description: 'Broadcast a message to all players.'
-  usage: '/broadcast <message>'
+  usage: '/broadcast <type> <message>'
   aliases: ['bc']
   permission:
     name: 'broadcast.use'
@@ -22,22 +22,26 @@ command:
 
 unregister.say.command: false
 
+use.sound: true
+sound:
+  name: 'note.bell'
+  volume: 100
+  pitch: 1
+
+broadcast.toast.title: "§cBroadCast !"
+
 # Interval de message destiné aux messages exéptionnels.
 broadcastMessage.Interval: 300
 broadcast:
   format: '§7[§6Broadcast§7] §f%message%' #Possibilité de mettre %player% pour afficher le nom du joueur.
-  type: chat # popup actionbar, tip, chat
 
-message.type: chat # popup, actionbar, tip, chat
 broadcasts:
   0:
     message: 'Welcome to the server!'
     interval: 300
+    type: chat #chat, popup, tip, actionbar, toast
 ```
 
-## Licence 📂
-
-Sous licence MIT. Voir [LICENSE](https://github.com/Synopsie/BroadCaster/blob/v1.0.0/LICENSE) pour plus de détails.
 ---
 
 ![BroadCaster](broadcaster.png)
