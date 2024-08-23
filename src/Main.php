@@ -46,6 +46,11 @@ class Main extends PluginBase {
 	 */
 	protected function onEnable() : void {
 
+        if (!file_exists($this->getFile() . 'vendor')) {
+            $this->getLogger()->error('Merci d\'installer une release du plugin et non le code source. (https://github.com/Synopsie/BroadCaster/releases)');
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+            return;
+        }
 		require $this->getFile() . 'vendor/autoload.php';
 
 		$config = $this->getConfig();
