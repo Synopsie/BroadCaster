@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.2.1
+ * @version 1.4.0
  *
  */
 
@@ -49,7 +49,7 @@ class BroadCastCommand extends CommandBase {
 	}
 
 	protected function onRun(CommandSender $sender, array $parameters) : void {
-        $config = Main::getInstance()->getConfig();
+		$config = Main::getInstance()->getConfig();
 		$type   = $parameters['type'] ?? 'chat';
 		$format = str_replace(['%message%', '%player%'], [$parameters['message'], $sender->getName()], $config->getNested('broadcast.format'));
 		if ($type === 'popup') {
@@ -67,20 +67,20 @@ class BroadCastCommand extends CommandBase {
 		} else {
 			Server::getInstance()->broadcastMessage($format);
 		}
-        if ($config->get('use.sound')) {
-            foreach (Server::getInstance()->getOnlinePlayers() as $player) {
-                $position = $player->getPosition();
-                $player->getNetworkSession()->sendDataPacket(
-                    PlaySoundPacket::create(
-                        $config->get('sound.name', 'note.bell'),
-                        $position->getX(),
-                        $position->getY(),
-                        $position->getZ(),
-                        $config->get('sound.volume', 100),
-                        $config->get('sound.pitch', 1)
-                    )
-                );
-            }
-        }
+		if ($config->get('use.sound')) {
+			foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+				$position = $player->getPosition();
+				$player->getNetworkSession()->sendDataPacket(
+					PlaySoundPacket::create(
+						$config->get('sound.name', 'note.bell'),
+						$position->getX(),
+						$position->getY(),
+						$position->getZ(),
+						$config->get('sound.volume', 100),
+						$config->get('sound.pitch', 1)
+					)
+				);
+			}
+		}
 	}
 }
