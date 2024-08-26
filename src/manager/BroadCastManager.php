@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.4.0
+ * @version 1.4.1
  *
  */
 

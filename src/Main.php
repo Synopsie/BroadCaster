@@ -11,7 +11,7 @@
  *
  * @author Synopsie
  * @link https://github.com/Synopsie
- * @version 1.4.0
+ * @version 1.4.1
  *
  */
 
@@ -27,6 +27,7 @@ use iriss\IrissCommand;
 use olymp\PermissionManager;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
+use function file_exists;
 
 class Main extends PluginBase {
 	use SingletonTrait;
@@ -45,11 +46,11 @@ class Main extends PluginBase {
 	 */
 	protected function onEnable() : void {
 
-        if (!file_exists($this->getFile() . 'vendor')) {
-            $this->getLogger()->error('Merci d\'installer une release du plugin et non le code source. (https://github.com/Synopsie/BroadCaster/releases)');
-            $this->getServer()->getPluginManager()->disablePlugin($this);
-            return;
-        }
+		if (!file_exists($this->getFile() . 'vendor')) {
+			$this->getLogger()->error('Merci d\'installer une release du plugin et non le code source. (https://github.com/Synopsie/BroadCaster/releases)');
+			$this->getServer()->getPluginManager()->disablePlugin($this);
+			return;
+		}
 		require $this->getFile() . 'vendor/autoload.php';
 
 		$config = $this->getConfig();
