@@ -27,7 +27,6 @@ use iriss\IrissCommand;
 use olymp\PermissionManager;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
-use sofia\Updater;
 
 class Main extends PluginBase {
 	use SingletonTrait;
@@ -55,7 +54,6 @@ class Main extends PluginBase {
 
 		$config = $this->getConfig();
 
-		Updater::checkUpdate('BroadCaster', $this->getDescription()->getVersion(), 'Synopsie', 'BroadCaster');
 		IrissCommand::register($this);
 
 		foreach ($config->get('broadcasts') as $broadcast) {

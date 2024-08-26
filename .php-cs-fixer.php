@@ -131,7 +131,7 @@ Ce plugin fera en sorte d'écrire des messages automatiques au moment souhaitez 
 
 @author Synopsie
 @link https://github.com/Synopsie
-@version 1.4.0
+@version 1.4.1
 
 BODY,
             'location' => 'after_open'
